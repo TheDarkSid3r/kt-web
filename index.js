@@ -147,6 +147,22 @@ const BombTools = {
             r();
         }
     },
+    SFXManager: class {
+        constructor(list) {
+            this.list = list;
+            this.audio = {};
+            this.list.forEach((n) => {
+                var src = "audio/" + n[0] + ".wav";
+                var aud = new Howl({
+                    src: [src],
+                    format: ["wav"],
+                    volume: n[1],
+                    autoplay: false
+                });
+                this.audio[n[0]] = aud;
+            });
+        }
+    },
     BombManager: class {
         constructor(settings, repoData) {
             this.debug = new Debug(this);
@@ -282,6 +298,13 @@ const BombTools = {
                 }, 1200);
             }, 1200); */
 
+            this.sfxmanager = new BombTools.SFXManager([
+                ["doublebeep", 0.3],
+                ["doublebeep_1.25", 0.3],
+                ["singlebeep", 0.3],
+                ["emergencyalarm", 0.4]
+            ]);
+            this.sfx = this.sfxmanager.audio;
             this.musicmanager = new BombTools.MusicManager(this);
             this.musicmanager.loadTracks().then(() => {
                 setTimeout(() => this.startTimer(), 1000);
@@ -400,8 +423,8 @@ const BombTools = {
             reason.strikes = this.currentStrikes;
             this.debug.log("Bomb strike! %s", JSON.stringify(reason));
             this.timerRenderer.setStrikes(this.currentStrikes);
+            if (this.currentStrikes <= 4) this.timeLastStriked = new Date().getTime();
             this.timerSpeedStage = Math.min(this.currentStrikes, 4);
-            this.timeLastStriked = new Date().getTime();
             if (this.currentStrikes >= this.settings.NumStrikes) return this.exploded(reason);
         }
 
@@ -421,12 +444,24 @@ const BombTools = {
         }
 
         startTimer() {
-            this.timerStarted = new Date().getTime();
-            var frame = () => {
-                this.timeElapsed = new Date().getTime() - this.timerStarted;
-                if (this.getCurrentTime() <= 0) return this.exploded({ timer: true });
-                this.timerRenderer.setTime(this.getCurrentTime());
-                this.timerFrame = requestAnimationFrame(() => frame());
+            //this.timerStarted = new Date().getTime();
+            this.timerTime = this.settings.Time;
+            var frame = (step) => {
+                if (step != null) {
+                    if (this.timerStarted == null) this.timerStarted = step;
+                    this.timeElapsedPerFrame = (step - this.timerStarted) / 1000;
+                    this.timerStarted = step;
+                    this.timerTime -= this.timeElapsedPerFrame * this.timerSpeed;
+                    if (this.getCurrentTime() <= 0) return this.exploded({ timer: true });
+                    this.timerRenderer.setTime(this.getCurrentTime(), this.sfx.emergencyalarm);
+                    this.musicmanager.checkForStinger(this.getCurrentTime(), this.timerSpeed);
+                    var timerSecond = Math.floor(this.getCurrentTime());
+                    if (this.lastTimerSecond != null && this.lastTimerSecond != timerSecond) {
+                        this.lastTimerSecond = timerSecond;
+                        this.sfx[["doublebeep", "doublebeep_1.25", "singlebeep", "singlebeep", "singlebeep"][this.timerSpeedStage || 0]].play();
+                    } else if (this.lastTimerSecond == null) this.lastTimerSecond = timerSecond;
+                }
+                this.timerFrame = requestAnimationFrame((s) => frame(s));
             };
             frame();
         }
@@ -442,6 +477,8 @@ const BombTools = {
             this.wrapper.remove();
             this.widgetArea.remove();
             this.timerRenderer.cornertw.remove();
+            this.musicmanager.endMusic();
+            this.timerRenderer.stopEmergencyLight();
         }
 
         bombSolved() {
@@ -465,14 +502,17 @@ const BombTools = {
         }
 
         getCurrentTime() {
-            var ls = this.timeLastStriked || this.settings.Time;
-            var t = this.settings.Time - this.timeElapsed / 1000;
-            //return t * this.timerSpeed;
+            return this.timerTime;
+            if (this.timerStarted == null) return this.settings.Time;
+            var ls = this.timeLastStriked != null ? this.settings.Time - (this.timeLastStriked - this.timerStarted) / 1000 : this.settings.Time;
+            var t = ls - (this.timeElapsed / 1000 * this.timerSpeed);
             return t;
+            //return t;
         }
     },
     MusicManager: class {
         constructor(BombManager) {
+            this.debug = new Debug(this);
             this.BombManager = BombManager;
             this.tracks = {
                 GameRoomA: 7,
@@ -485,24 +525,82 @@ const BombTools = {
             };
             var trackNames = Object.keys(this.tracks);
             this.track = trackNames[Math.floor(Math.random() * trackNames.length)];
-            this.currentTrack = 0;
-            this.maxNonStingerTrack = this.tracks[this.track] - 2;
+            this.playlistLength = this.tracks[this.track];
+            this.maxNonStingerTrack = this.tracks[this.track] - 3;
+            this.playFirstTrack = true;
+            this.stingerIsPlayingOrHasPlayed = false;
         }
 
         loadTracks() {
-            this.loadedAudio = new Array(this.tracks[this.track]);
+            this.loadedAudio = new Array(this.tracks[this.track]).fill(false);
+            this.stingerAudio = new Howl({
+                src: "audio/Stinger.wav",
+                format: ["wav"],
+                volume: 1,
+                autoplay: false
+            });
             return new Promise((resolve, reject) => {
-                this.decideNextLoop();
                 this.loadedAudio.forEach((_, i) => {
                     var src = "audio/" + this.track + "_" + (i + 1) + ".wav";
+                    var volume = 0.4;
+                    var aud = new Howl({
+                        src: [src],
+                        format: ["wav"],
+                        volume,
+                        autoplay: false,
+                        onload: () => {
+                            this.loadedAudio[i] = aud;
+                            if (this.loadedAudio.every((a) => a)) {
+                                this.decideNextLoop();
+                                resolve();
+                            }
+                        },
+                        onplay: () => {
+                            if (!i) {
+                                aud.fade(0, volume, 3000);
+                            }
+                        },
+                        onend: () => this.decideNextLoop()
+                    });
                 });
             });
         }
 
+        playTrack(num) {
+            this.debug.log("Playing loop %i (%s)", num, this.track + "_" + (num + 1));
+            this.loadedAudio[num].play();
+        }
+
         decideNextLoop() {
-            var percentageOfBombTimerRan = (this.BombManager.timeElapsed || 0) / 1000 / (this.BombManager.settings.Time - 30); // elapsed timer time out of [bomb time before 30-second mark]
-            var musicTrackIndex = Math.round(this.maxNonStingerTrack * percentageOfBombTimerRan);
-            console.log(musicTrackIndex);
+            if (this.playFirstTrack) {
+                this.playFirstTrack = false;
+                this.playTrack(0);
+            } else if (this.playLastTrack) {
+                this.playTrack(this.playlistLength - 1);
+            } else {
+                var timeRemaining = this.BombManager.getCurrentTime();
+                var totalRoundTime = this.BombManager.settings.Time;
+                this.playTrack(Math.max(0, Math.min(this.playlistLength - 2, Math.floor(this.playlistLength - timeRemaining / totalRoundTime * (this.playlistLength - 1)))));
+            }
+        }
+
+        checkForStinger(bombtime, rate) {
+            var stingerlength = 7;
+            if (!this.stingerIsPlayingOrHasPlayed && bombtime <= 30 + stingerlength * rate) {
+                this.stingerIsPlayingOrHasPlayed = true;
+                this.stingerAudio.play();
+                this.stingerTimeout = setTimeout(() => {
+                    this.playLastTrack = true;
+                    this.loadedAudio.forEach((a) => a.stop());
+                    this.decideNextLoop();
+                }, stingerlength * 1000);
+            }
+        }
+
+        endMusic() {
+            this.stingerAudio.stop();
+            clearTimeout(this.stingerTimeout);
+            this.loadedAudio.forEach((a) => a.stop());
         }
     },
     SVGGenerator: (url) => {
@@ -755,8 +853,12 @@ const BombTools = {
             var backing = $("<div/>").addClass("bomb-timer-time-backing").text("88:88").appendTo(timertw);
             var backing2 = backing.clone().appendTo(this.cornertw);
             var alarmOn = false;
-            this.setTime = (t) => {
-                var debugTimer = true;
+            var emgnc = null;
+            var emgsf = null;
+            var emgel = null;
+            this.setTime = (t, emergencySFX) => {
+                if (emergencySFX && !emgsf) emgsf = emergencySFX;
+                var debugTimer = false;
                 var s = debugTimer ? Math.floor(t).toString() : BombTools.FormatBombTime(t);
                 if (debugTimer) {
                     var backingtext = "8".repeat(s.length);
@@ -768,10 +870,11 @@ const BombTools = {
                 if (t <= 60 && !alarmOn) {
                     alarmOn = true;
                     var loop = () => {
-                        setTimeout(() => {
-                            var redlight = $("<div/>").addClass("emergency-light").appendTo(document.body);
-                            setTimeout(() => {
-                                redlight.remove();
+                        emgnc = setTimeout(() => {
+                            emgel = $("<div/>").addClass("emergency-light").appendTo(document.body);
+                            if (emgsf) emgsf.play();
+                            emgnc = setTimeout(() => {
+                                emgel.remove();
                                 loop();
                             }, 1250);
                         }, 1000);
@@ -780,6 +883,11 @@ const BombTools = {
                 }
             };
             this.setTime(this.data.time);
+            this.stopEmergencyLight = () => {
+                clearTimeout(emgnc);
+                if (emgsf) emgsf.stop();
+                if (emgel) emgel.remove();
+            };
         }
     },
     FormatBombTime: (t) => {
@@ -905,12 +1013,16 @@ const BombTools = {
 var repo = new BombTools.RepoManager();
 repo.loadData().then(() => {
     new BombTools.BombManager({
-        Time: 300,
+        Time: 60,
         NumStrikes: 10000,
         FrontFaceOnly: true,
         OptionalWidgetCount: 5,
         Pools: [
-            { Count: 1, ComponentTypes: ["SimpleButton"] }
+            { Count: 1, ComponentTypes: ["WhosOnFirst"] },
+            { Count: 1, ComponentTypes: ["Wires"] },
+            { Count: 1, ComponentTypes: ["Keypad"] },
+            { Count: 1, ComponentTypes: ["Memory"] },
+            { Count: 1, ComponentTypes: ["BigButton"] }
         ]
     }, repo.modules);
 });
