@@ -1,0 +1,328 @@
+[
+    //ManualMetaData.json
+    //Contains all meta-data describing the manuals used in each language
+    //Meta data here should never be directly modified, but instead archived with an updated version taking its place.
+    //========================
+    //Current manuals
+    //===================
+    //Place all active manuals at the top for convenience
+    {
+        //Original, shipped manual
+        //For posterity's sake, this remains version "1" rather than "1-en"
+        "ManualVersion": "1",
+        "LanguageCode": "en",
+        "LockCode": "241",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "4",
+        "IsBeta": false
+    },
+    {
+        //Danish
+        "ManualVersion": "1-da",
+        "LanguageCode": "da",
+        "LockCode": "354",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1"
+    },
+    {
+        //Dutch
+        "ManualVersion": "2-nl",
+        "LanguageCode": "nl",
+        "LockCode": "474",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1",
+        "IsBeta": false
+    },
+    {
+        //Esperanto
+        "ManualVersion": "1-eo",
+        "LanguageCode": "eo",
+        "LockCode": "136",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1",
+        "IsBeta": false
+    },
+    {
+        //Finnish
+        "ManualVersion": "1-fi",
+        "LanguageCode": "fi",
+        "LockCode": "873",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1"
+    },
+    {
+        //French
+        "ManualVersion": "1-fr",
+        "LanguageCode": "fr",
+        "LockCode": "750",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1"
+    },
+    {
+        //Italian
+        "ManualVersion": "1-it",
+        "LanguageCode": "it",
+        "LockCode": "345",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1"
+    },
+    {
+        //Japanese
+        "ManualVersion": "1-ja",
+        "LanguageCode": "ja",
+        "LockCode": "122",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1",
+        "IsBeta": false
+    },
+    {
+        //Norwegian
+        "ManualVersion": "1-nb",
+        "LanguageCode": "nb",
+        "LockCode": "698",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1"
+    },
+    {
+        //Polish
+        "ManualVersion": "2-pl",
+        "LanguageCode": "pl",
+        "LockCode": "856",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1",
+        "IsBeta": false
+    },
+    {
+        //Portuguese-Brazil
+        "ManualVersion": "1-pt-BR",
+        "LanguageCode": "pt-BR",
+        "LockCode": "384",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1"
+    },
+    {
+        //Romanian
+        "ManualVersion": "1-ro",
+        "LanguageCode": "ro",
+        "LockCode": "626",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1",
+        "IsBeta": false
+    },
+    {
+        //Russian
+        "ManualVersion": "1-ru",
+        "LanguageCode": "ru",
+        "LockCode": "117",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1"
+    },
+    {
+        //Spanish
+        "ManualVersion": "1-es",
+        "LanguageCode": "es",
+        "LockCode": "925",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1",
+        "IsBeta": false
+    },
+    {
+        //Turkish
+        "ManualVersion": "1-tr",
+        "LanguageCode": "tr",
+        "LockCode": "993",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1",
+        "IsBeta": false
+    },
+    //========================
+    //In development (only shipped in localizer builds)
+    //===================
+    {
+        //Arabic
+        "ManualVersion": "1-ar",
+        "LanguageCode": "ar",
+        "LockCode": "567",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1"
+    },
+    {
+        //Simplified Chinese
+        "ManualVersion": "1-zh-CN",
+        "LanguageCode": "zh-CN",
+        "LockCode": "931",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1"
+    },
+    {
+        //Traditional Chinese
+        "ManualVersion": "1-zh-TW",
+        "LanguageCode": "zh-TW",
+        "LockCode": "917",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1"
+    },
+    {
+        //Czech
+        "ManualVersion": "1-cs",
+        "LanguageCode": "cs",
+        "LockCode": "083",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1"
+    },
+    {
+        //German
+        "ManualVersion": "1-de",
+        "LanguageCode": "de",
+        "LockCode": "558",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1"
+    },
+    {
+        //Hebrew
+        "ManualVersion": "1-he",
+        "LanguageCode": "he",
+        "LockCode": "506",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1"
+    },
+    {
+        //Hungarian
+        "ManualVersion": "1-hu",
+        "LanguageCode": "hu",
+        "LockCode": "642",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1"
+    },
+    {
+        //Korean
+        "ManualVersion": "1-ko",
+        "LanguageCode": "ko",
+        "LockCode": "964",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1"
+    },
+    {
+        //Portuguese-Portugal
+        "ManualVersion": "1-pt-PT",
+        "LanguageCode": "pt-PT",
+        "LockCode": "106",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1"
+    },
+    {
+        //Swedish
+        "ManualVersion": "1-sv",
+        "LanguageCode": "sv",
+        "LockCode": "453",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1"
+    },
+    {
+        //Thai
+        "ManualVersion": "1-th",
+        "LanguageCode": "th",
+        "LockCode": "248",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1"
+    },
+    {
+        //Ukranian
+        "ManualVersion": "1-uk",
+        "LanguageCode": "uk",
+        "LockCode": "775",
+        "Seed": 1,
+        "IsValid": true,
+        "Revision": "1"
+    },
+    //========================
+    //Archived, invalid manuals
+    //===================
+    {
+        //B-01 (IGF submission) [retired Oct. 27, 2014]
+        //Not public
+        "ManualVersion": "B-01",
+        "LanguageCode": "en",
+        "LockCode": "273",
+        "Seed": 1,
+        "IsValid": false
+    },
+    {
+        //A-09 (PSX 2014, etc.) [retired Jan. 8, 2015]
+        //Not public
+        "ManualVersion": "A-09",
+        "LanguageCode": "en",
+        "LockCode": "999",
+        "Seed": 1,
+        "IsValid": false
+    },
+    {
+        //A-10 (PSX 2014, etc.) [retired Mar. 25, 2015]
+        //Public
+        "ManualVersion": "A-10",
+        "LanguageCode": "en",
+        "LockCode": "468",
+        "Seed": 1,
+        "IsValid": false
+    },
+    {
+        //A-11 (Beta) [retired June 30, 2015]
+        //Public
+        "ManualVersion": "A-11",
+        "LanguageCode": "en",
+        "LockCode": "342",
+        "Seed": 1,
+        "IsValid": false
+    },
+    {
+        //Polish 1-pl
+        //Retired Oct 24, 2019 (planned)
+        //Invalidated due to rule error in translation of Manual/wires.5wiresrule_4
+        //Originally translated as "Otherwise, cut the last wire"
+        //Should be "Otherwise, cut the first wire"
+        "ManualVersion": "1-pl",
+        "LanguageCode": "pl",
+        "LockCode": "529",
+        "Seed": 1,
+        "IsValid": false,
+        "Revision": "1"
+    },
+    {
+        //Dutch
+        //Retired Oct 24, 2019 (planned)
+        //Invalidated due to Who's on First wording change: BLANK -> BLANCO
+        //Affected WhosOnFirst/rule_DISPLAY8 and WhosOnFirst/rule_KEYPAD_group1_4
+        "ManualVersion": "1-nl",
+        "LanguageCode": "nl",
+        "LockCode": "541",
+        "Seed": 1,
+        "IsValid": false,
+        "Revision": "1"
+    }
+]

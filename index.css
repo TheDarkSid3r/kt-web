@@ -1,0 +1,261 @@
+@font-face {
+    src: url(images/Digits.ttf);
+    font-family: "Digits";
+}
+
+body {
+    margin: 0;
+    color: #000;
+    background-color: #222;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 100%;
+    box-sizing: border-box;
+}
+
+.bomb-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.bomb-face {
+    position: absolute;
+    border: 2px solid #000;
+    background-color: #fff;
+    opacity: 1;
+}
+
+.bomb-module-wrapper {
+    position: absolute;
+}
+
+.bomb-module-image-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.bomb-module-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 5;
+}
+
+.bomb-module-text {
+    position: absolute;
+    white-space: nowrap;
+    display: inline-block;
+    transform: translate(-50%, -50%);
+}
+
+.bomb-strike {
+    position: absolute;
+    top: 41px;
+    background-image: url(images/widget/strike.png);
+    background-size: 100% 100%;
+    width: 35px;
+    height: 35px;
+    opacity: 0.1;
+    z-index: 20;
+}
+
+.bomb-strike-1 {
+    left: 75px;
+}
+
+.bomb-strike-2 {
+    left: 106px;
+}
+
+.bomb-strike-striked {
+    opacity: 1;
+}
+
+.bomb-strike-striked-double {
+    animation: bomb-strike-striked-double 0.25s linear infinite;
+}
+
+@keyframes bomb-strike-striked-double {
+    0% {
+        opacity: 1;
+    }
+    49% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.1;
+    }
+    100% {
+        opacity: 0.1;
+    }
+}
+
+.bomb-strike-counter, .bomb-strike-counter-backing {
+    position: absolute;
+    top: 28px;
+    left: 69px;
+    /* nice */
+    width: 74px;
+    text-align: right;
+    font-family: "Digits";
+    font-size: 27px;
+    color: #000;
+    transform: scaleY(1.19);
+}
+
+.bomb-strike-counter {
+    z-index: 3;
+}
+
+.bomb-strike-counter-backing {
+    opacity: 0.1;
+    z-index: 2;
+}
+
+.bomb-strike-counter-double {
+    animation: bomb-strike-counter-double 0.5s linear infinite;
+}
+
+@keyframes bomb-strike-counter-double {
+    0% {
+        opacity: 1;
+    }
+    49% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.bomb-timer-time-wrapper {
+    position: absolute;
+    top: 47px;
+    width: 100%;
+    left: 5px;
+    transform: scaleY(1.44);
+    z-index: 20;
+    clip-path: polygon(10px 30px, 201px 30px, 201px 120px, 10px 120px);
+}
+
+.bomb-timer-time, .bomb-timer-time-backing {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: auto;
+    white-space: nowrap;
+    height: auto;
+    text-align: center;
+    font-family: "Digits";
+    font-size: 66px;
+    color: #000;
+    transform: translateX(-50%);
+}
+
+.bomb-timer-time {
+    z-index: 3;
+}
+
+.bomb-timer-time-backing {
+    opacity: 0.1;
+    z-index: 2;
+}
+
+.bomb-module-selectable-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 200000;
+}
+
+.bomb-module-selectable {
+    cursor: pointer;
+    stroke: #ff4500;
+    stroke-width: 13px;
+    fill: transparent;
+}
+
+.widget-area {
+    background-color: #0000;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 20px 0;
+    text-align: center;
+    pointer-events: none;
+    z-index: 30000;
+}
+
+.widget-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 120px;
+    height: 70px;
+    margin: -5px 5px;
+}
+
+.widget-svg {
+    height: 100%;
+    width: 100%;
+}
+
+.corner-timer-time-wrapper {
+    position: absolute;
+    bottom: 173px;
+    width: 240px;
+    right: 2px;
+    transform: scaleY(1.44);
+    z-index: 30000;
+    pointer-events: none;
+}
+
+.corner-timer-time-wrapper>.bomb-timer-time, .corner-timer-time-wrapper>.bomb-timer-time-backing {
+    color: #f00;
+}
+
+.corner-timer-backdrop {
+    position: absolute;
+    width: 240px;
+    height: 100px;
+    top: 16px;
+    left: -5px;
+    background-color: #000;
+    z-index: 1;
+    opacity: 0.8;
+    border-radius: 10px;
+}
+
+.emergency-light {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20000;
+    background-color: #f00;
+    opacity: 0.1;
+    pointer-events: none;
+}
