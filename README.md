@@ -8,19 +8,19 @@ A version of Keep Talking and Nobody Explodes recreated using (mostly) manual SV
 
 ## How does it work?
 
-To start a round, there are three options. You can use [Free Play](#freeplay), [select a pre-existing mission](#selecting), [create your own mission](#3creating), or use the [Dynamic Mission Generator (DMG)](#dmg).
+To start a round, there are three options. You can use [Free Play](#1-free-play), [select a pre-existing mission](#2-selecting-a-mission), [create your own mission](#3-creating-a-mission), or use the [Dynamic Mission Generator (DMG)](#4-dynamic-mission-generator-dmg).
 
 While in-game, you can select the Menu button in the top-left to open the menu dossier. From here, you can tweak settings or quit the bomb. The poster on the back wall of the gameplay room displays current mission details.
 
 <br/>
 
-# 1. Free Play {#freeplay}
+# 1. Free Play
 
 To use vanilla Free Play, select the "Free Play" option from the setup menu.
 
 <br/>
 
-# 2. Selecting a mission {#selecting}
+# 2. Selecting a mission
 
 To start a round using an existing mission, select "Missions" from the setup menu. Select a table of contents (if no extra missions are installed, you'll only have access to the vanilla missions) and select a mission from the list.
 
@@ -28,13 +28,13 @@ Once selected, the mission's information will be displayed as well as its leader
 
 <br/>
 
-# 3. Creating a mission {#creating}
+# 3. Creating a mission
 
 To create a mission, select "[Mission Creator](https://thedarksid3r.github.io/kt-web/missions.html)" from the setup menu. The mission creator allows you to create a table of contents with missions just like the original KTaNE modkit.
 
 <br/>
 
-# 4. Dynamic Mission Generator (DMG) {#dmg}
+# 4. Dynamic Mission Generator (DMG)
 
 This DMG works exactly like the [original DMG mod](https://steamcommunity.com/sharedfiles/filedetails/?id=1633427044). To use the DMG, select "Dynamic Mission Generator" from the setup menu. Type a mission string and select "Start" to start the round using the mission string.
 
